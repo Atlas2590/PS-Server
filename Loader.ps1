@@ -1,4 +1,4 @@
-# Loader.ps1
+
 $baseUrl = "https://raw.githubusercontent.com/Atlas2590/PS-Server/main"
 $files = @("Lib_Utils.ps1", "Lib_AD.ps1", "Lib_GPO.ps1", "Lib_FileZilla.ps1", "Main.ps1")
 
