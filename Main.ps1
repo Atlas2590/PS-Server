@@ -2,13 +2,6 @@
 # SCRIPT PRINCIPALE - AVVIO
 # ==============================================================================
 
-# Caricamento dei file (Dot Sourcing)
-# $PSScriptRoot punta alla cartella dove si trova questo file
-. "$PSScriptRoot\Lib_Utils.ps1"
-. "$PSScriptRoot\Lib_AD.ps1"
-. "$PSScriptRoot\Lib_GPO.ps1"
-. "$PSScriptRoot\Lib_FileZilla.ps1"
-
 # Funzione per comando FileZilla (rimasta singola per ora)
 function Esegui-FileZilla {
     Write-Host "Configurazione FileZilla in corso..."
