@@ -14,7 +14,9 @@ function Applica-GPO-Pacchetto {
     if ($OUTarget) { New-GPLink -Name $GPOName -Target $OUTarget.DistinguishedName -ErrorAction SilentlyContinue }
 
     foreach ($S in $Settings) {
-        Set-GPRegistryValue -Name $GPOName -Key $RegPath -ValueName $S.Name -Type $S.Type -Value $S.Value
+        # Se il setting ha un SpecificPath usa quello, altrimenti usa il RegPath generico
+        $FinalPath = if ($S.SpecificPath) { $S.SpecificPath } else { $RegPath }
+        Set-GPRegistryValue -Name $GPOName -Key $FinalPath -ValueName $S.Name -Type $S.Type -Value $S.Value
         Write-Host "Configurato: $($S.Name) ($($S.Type))" -ForegroundColor Gray
     }
     Write-Host "GPO $GPOName applicata con successo!" -ForegroundColor Green
