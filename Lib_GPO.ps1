@@ -59,7 +59,7 @@ function Show-MenuGPO {
                     @{ Name="OSRecovery"; Type="DWord"; Value=1 },
                     @{ Name="RDVConfigureBDE"; Type="DWord"; Value=1 },
                     @{ Name="RDVDenyWriteAccess"; Type="DWord"; Value=1 },
-                    @{ Name="RDVDenyCrossOrg"; Type="DWord"; Value=1 },
+                    @{ Name="RDVDenyCrossOrg"; Type="DWord"; Value=0 },
                     @{ Name="RDVEncryptionType"; Type="DWord"; Value=2 },
                     @{ Name="RDVPassphrase"; Type="DWord"; Value=1 },
                     @{ Name="RDVPassphraseComplexity"; Type="DWord"; Value=1 },
