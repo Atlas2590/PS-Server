@@ -65,6 +65,10 @@ function Show-MenuGPO {
                     @{ Name="RDVPassphrase"; Type="DWord"; Value=1 },
                     @{ Name="RDVPassphraseComplexity"; Type="DWord"; Value=1 },
                     @{ Name="RDVRecovery"; Type="DWord"; Value=1 },
+                    @{ Name="FDVDenyWriteAccess"; Type="DWord"; Value=1; SpecificPath="HKLM\System\CurrentControlSet\Policies\Microsoft\FVE" },
+                    @{ Name="FDVEncryptionType"; Type="DWord"; Value=2 },
+                    @{ Name="FDVPassphrase"; Type="DWord"; Value=1 },
+                    @{ Name="FDVPassphraseComplexity"; Type="DWord"; Value=1 },
                     @{ Name="FDVRecovery"; Type="DWord"; Value=1 }
                 )
                 Applica-GPO-Pacchetto -GPOName "MDS-Bitlocker" -RegPath "HKLM\SOFTWARE\Policies\Microsoft\FVE" -Settings $BitlockerSettings
