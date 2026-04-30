@@ -35,7 +35,7 @@ function Show-MenuGPO {
             '1' {
                 # --- CONTROLLO E CREAZIONE PERCORSO ---
                 $LocalPath = "C:\DATI\CED\MDS\BITLOCKER_KEY"
-                $NetworkPath = "\\SVRCENTRALE\CED\MDS\BITLOCKER_KEY\"
+                $NetworkPath = "\\$env:COMPUTER_NAME\CED\MDS\BITLOCKER_KEY\"
 
                 Write-Host "Verifica percorso: $LocalPath..." -ForegroundColor Yellow
                 if (!(Test-Path $LocalPath)) {
@@ -75,7 +75,7 @@ function Show-MenuGPO {
                 Pausa
             }
             '2' {
-                $WallSettings = @( @{ Name="Wallpaper"; Type="String"; Value="\\SVRCENTRALE\CONDIVISA\sfondo.jpg" } )
+                $WallSettings = @( @{ Name="Wallpaper"; Type="String"; Value="\\$NOME_PC\CONDIVISA\sfondo.jpg" } )
                 Applica-GPO-Pacchetto -GPOName "MDS-Wallpaper" -RegPath "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Settings $WallSettings
                 Pausa
             }
