@@ -90,6 +90,7 @@ function Show-MenuGPO {
                     @{ Name="DefaultRecoveryFolderPath"; Type="ExpandString"; Value=$NetworkPath },
                     @{ Name="UseRecoveryPassword"; Type="DWord"; Value=1 },
                     @{ Name="UseAdvancedStartup"; Type="DWord"; Value=1 },
+                    @{ Name="EnableBDEWithNoTPM"; Type="DWord"; Value=1 },
                     @{ Name="OSEncryptionType"; Type="DWord"; Value=2 },
                     @{ Name="OSPassphrase"; Type="DWord"; Value=1 },
                     @{ Name="OSPassphraseComplexity"; Type="DWord"; Value=1 },
