@@ -49,23 +49,41 @@ function Aggiungi-UtenteFileZilla {
     param([string]$Username)
 
     $xmlPath = "C:\Program Files (x86)\FileZilla Server\FileZilla Server.xml"
-    if (!(Test-Path $xmlPath)) { return }
+    if (!(Test-Path $xmlPath)) { 
+        Write-Host " [!] ERRORE: File di configurazione non trovato." -ForegroundColor Red
+        return 
+    }
 
     # Path cartella
     $folderPath = if ($Username -eq "SCANSIONI") { "C:\DATI\SCANSIONI" } else { "C:\DATI\$Username\SCANSIONI" }
     if (!(Test-Path $folderPath)) { New-Item -Path $folderPath -ItemType Directory -Force | Out-Null }
 
     [xml]$xmlDoc = Get-Content $xmlPath
+    
+    # --- FIX: Selezione e creazione nodo Users se mancante ---
     $usersNode = $xmlDoc.SelectSingleNode("//Users")
+    if ($null -eq $usersNode) {
+        # Se non esiste, lo creiamo sotto la radice FileZillaServer
+        $root = $xmlDoc.SelectSingleNode("FileZillaServer")
+        if ($null -eq $root) {
+            Write-Host " [!] Errore critico: Struttura XML non valida." -ForegroundColor Red
+            return
+        }
+        $usersNode = $xmlDoc.CreateElement("Users")
+        $root.AppendChild($usersNode) | Out-Null
+    }
 
-    # --- CONTROLLO DUPLICATI INTERATTIVO ---
-    $existingUser = $usersNode.User | Where-Object { $_.Name -eq $Username }
+    # --- CONTROLLO DUPLICATI ---
+    # Usiamo @() per forzare un array ed evitare errori se c'è un solo utente o zero
+    $existingUser = @($usersNode.User) | Where-Object { $_.Name -eq $Username }
+    
     if ($existingUser) {
         Write-Host "`n [!] ATTENZIONE: L'utente [$Username] è già registrato." -ForegroundColor Yellow
         $scelta = Read-Host " Vuoi sostituirlo/aggiornarlo? (S/N)"
         if ($scelta.ToUpper() -eq 'S') {
             Write-Host " > Rimozione vecchio profilo..." -ForegroundColor Gray
-            $usersNode.RemoveChild($existingUser) | Out-Null
+            # Rimuoviamo l'elemento specifico trovato
+            $usersNode.RemoveChild($existingUser[0]) | Out-Null
         } else {
             Write-Host " > Operazione annullata per l'utente $Username." -ForegroundColor Cyan
             return
