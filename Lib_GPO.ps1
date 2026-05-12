@@ -70,7 +70,7 @@ function Show-MenuGPO {
             '1' {
                 # --- CONTROLLO E CREAZIONE PERCORSO ---
                 $LocalPath = "C:\DATI\CED\MDS\BITLOCKER_KEY"
-                $NetworkPath = "\\$env:COMPUTER_NAME\CED\MDS\BITLOCKER_KEY\"
+                $NetworkPath = "\\$env:COMPUTERNAME\CED\MDS\BITLOCKER_KEY\"
 
                 Write-Host "Verifica percorso: $LocalPath..." -ForegroundColor Yellow
                 if (!(Test-Path $LocalPath)) {
@@ -90,6 +90,7 @@ function Show-MenuGPO {
                     @{ Name="DefaultRecoveryFolderPath"; Type="ExpandString"; Value=$NetworkPath },
                     @{ Name="UseRecoveryPassword"; Type="DWord"; Value=1 },
                     @{ Name="UseAdvancedStartup"; Type="DWord"; Value=1 },
+                    @{ Name="EnableBDEWithNoTPM"; Type="DWord"; Value=1 },
                     @{ Name="OSEncryptionType"; Type="DWord"; Value=2 },
                     @{ Name="OSPassphrase"; Type="DWord"; Value=1 },
                     @{ Name="OSPassphraseComplexity"; Type="DWord"; Value=1 },
